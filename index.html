@@ -192,3 +192,100 @@ acabei de criar a Life invader
   </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Postar Fotos e Vídeos</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f1f1f1;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Feed */
+    #feed {
+      max-width: 320px;
+      margin: 20px auto;
+    }
+
+    .post {
+      background: white;
+      border-radius: 10px;
+      padding: 10px;
+      margin-bottom: 15px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+
+    .post img, .post video {
+      width: 100%;
+      max-height: 300px;
+      border-radius: 10px;
+    }
+
+    /* Botão flutuante */
+    .btn-add {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 60px;
+      height: 60px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      font-size: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0px 4px 8px rgba(0,0,0,0.3);
+      transition: 0.3s;
+    }
+    .btn-add:hover {
+      background-color: #218838;
+      transform: scale(1.1);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Área do feed -->
+  <div id="feed"></div>
+
+  <!-- Input escondido -->
+  <input type="file" id="postInput" accept="image/*,video/*" style="display:none;">
+
+  <!-- Botão flutuante -->
+  <button class="btn-add" onclick="document.getElementById('postInput').click()">➕</button>
+
+  <script>
+    const postInput = document.getElementById("postInput");
+    const feed = document.getElementById("feed");
+
+    postInput.addEventListener("change", e => {
+      const file = e.target.files[0];
+      if(file){
+        const post = document.createElement("div");
+        post.classList.add("post");
+
+        if(file.type.startsWith("image/")){
+          const img = document.createElement("img");
+          img.src = URL.createObjectURL(file);
+          post.appendChild(img);
+        } else if(file.type.startsWith("video/")){
+          const video = document.createElement("video");
+          video.src = URL.createObjectURL(file);
+          video.controls = true;
+          post.appendChild(video);
+        }
+
+        feed.prepend(post); // aparece no topo
+      }
+    });
+  </script>
+
+</body>
+</html>
